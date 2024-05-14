@@ -16,17 +16,10 @@ Download the latest [aws-es-proxy release](https://github.com/abutaha/aws-es-pro
 
 ### Docker
 
-There is an official docker image available for aws-es-proxy. To run the image:
+To build and run the image:
 
 ```sh
-# v0.9 and newer (latest always point to the latest release):
-
-docker run --rm -v ~/.aws:/root/.aws -p 9200:9200 abutaha/aws-es-proxy:v1.0 -endpoint https://dummy-host.ap-southeast-2.es.amazonaws.com -listen 0.0.0.0:9200
-
-v.08:
-
-docker run --rm -it abutaha/aws-es-proxy ./aws-es-proxy -endpoint https://dummy-host.ap-southeast-2.es.amazonaws.com
-
+docker run --rm -it $(docker build -q .) ./aws-es-proxy -endpoint https://dummy-host.ap-southeast-2.es.amazonaws.com
 ```
 
 To expose a port number other than the default 9200, pass an environment variable of `PORT_NUM` to docker with the port number you wish to expose for your service.
@@ -124,6 +117,8 @@ For a full list of available options, use `-h`:
 ```sh
 ./aws-es-proxy -h
 Usage of ./aws-es-proxy:
+  -assume string
+        Optionally specify role to assume
   -auth
         Require HTTP Basic Auth
   -debug
@@ -144,6 +139,8 @@ Usage of ./aws-es-proxy:
         Authentication Required
   -remote-terminate
         Allow HTTP remote termination
+  -sso
+        Use AWS SSO for auth
   -timeout int
         Set a request timeout to ES. Specify in seconds, defaults to 15 (default 15)
   -username string
